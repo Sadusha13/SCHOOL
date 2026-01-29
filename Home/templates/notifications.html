@@ -1,0 +1,52 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Notifications</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Notifications</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        {% if all_notifications %}
+                            <div class="notification-list">
+                                {% for notification in all_notifications %}
+                                <div class="notification-item {% if not notification.is_read %}unread{% endif %}" style="padding: 15px; border-bottom: 1px solid #eaeaea; display: flex; align-items: center;">
+                                    <div style="flex-grow: 1;">
+                                        <p style="margin-bottom: 5px;"> {{ notification.message }} <strong>your estimate</strong></p>
+                                        <small style="color: #999;">{{ notification.created_at|timesince }} ago</small>
+                                    </div>
+                                    {% if not notification.is_read %}
+                                    <span class="badge badge-primary">New</span>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info" role="alert">
+                                <i class="fas fa-info-circle"></i> No notifications available.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{%static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{%static 'assets/js/popper.min.js' %}"></script>
+<script src="{%static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+{% endblock %}
